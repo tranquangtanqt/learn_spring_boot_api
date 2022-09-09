@@ -2,9 +2,6 @@ package com.learn.api.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,26 +22,23 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class TodoDetail extends BaseEntity {
-	
+
 	private static final long serialVersionUID = -7258481487443491255L;
-	
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(name = "name")
 	private String name;
 
 	@Column(name = "sort_order")
 	private Long sortOrder;
-	
-	@ManyToOne
-    @JoinColumn(name = "todo_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
-    @JsonProperty("todo_id")
-	private Todo todo;
 
+	@Column(name = "content", columnDefinition="text")
+	private String content;
+
+	@ManyToOne
+	@JoinColumn(name = "todo_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("todoId")
+	private Todo todo;
 }

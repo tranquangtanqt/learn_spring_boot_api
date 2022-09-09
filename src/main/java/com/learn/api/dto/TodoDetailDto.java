@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class TodoDetailDto extends BaseDto implements Serializable {
 	
 	private static final long serialVersionUID = 7488837681504224633L;
-	private Long id;
+
 	private String name;
 	private Long sortOrder;
 	private Todo todo;

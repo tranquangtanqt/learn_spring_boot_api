@@ -1,8 +1,5 @@
 package com.learn.api.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +17,16 @@ public class TodoService {
 	@Autowired
 	private MapperService mapperService;
 	
+	
 	/**
-	 * Get all data from table home_links
+	 * Get record todo
+	 * @param id
 	 * @return
 	 */
-	public List<TodoDto> getAll(){
-		List<Todo> todos = todoRepository.findByOrderBySortOrderAsc();
-		
-		List<TodoDto> todoDtos = new ArrayList<TodoDto>();
-		for (Todo todo : todos) {
-			todoDtos.add(mapperService.mapTodoToDto(todo));
-		}
-		
-		return todoDtos;
+	public TodoDto getById(Long id) {
+		Todo todo = todoRepository.findById(id).get();
+		if(todo.getDelFlg().equals(true)) return null;
+		return mapperService.mapTodoToDto(todo);
 	}
 	
 	/**

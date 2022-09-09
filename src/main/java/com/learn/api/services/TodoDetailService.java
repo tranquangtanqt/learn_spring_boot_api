@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.learn.api.dto.TodoDetailDto;
+import com.learn.api.dto.TodoDto;
 import com.learn.api.entities.TodoDetail;
 import com.learn.api.repositories.ITodoDetailRepository;
+import com.learn.api.repositories.ITodoRepository;
 
 @Service
 public class TodoDetailService {
 
 	@Autowired
 	private ITodoDetailRepository todoDetailRepository;
+	
+	@Autowired
+	private TodoService todoService;
 
 	@Autowired
 	private MapperService mapperService;
@@ -36,16 +41,19 @@ public class TodoDetailService {
 	 * @return
 	 */
 	@Transactional
-	public TodoDetailDto create(TodoDetailDto todoDetailDto) {
+	public TodoDto create(TodoDetailDto todoDetailDto) {
+		
 		TodoDetail todoDetail = new TodoDetail();
 		todoDetail.setName(todoDetailDto.getName());
-		todoDetail.setSortOrder(Long.valueOf(10));
+		List<TodoDetail> list = todoDetailRepository.findByTodoId(todoDetailDto.getTodo().getId());
+		Long orderNumber = Long.valueOf(list.size() + 1);
+		todoDetail.setSortOrder(orderNumber);
+		
 		todoDetail.setTodo(todoDetailDto.getTodo());
 		todoDetailRepository.save(todoDetail);
-
-		todoDetailDto.setId(todoDetail.getId());
-//		todoDetailDto.setSortOrder(todoDetail.getId());
-		return todoDetailDto;
+		
+		TodoDto todoDto = todoService.getById(todoDetailDto.getTodo().getId());
+		return todoDto;
 	}
 
 	/**
@@ -60,5 +68,21 @@ public class TodoDetailService {
 		todoDetail.setName(todoDetailDto.getName());
 //		todoDetail.setSortOrder(todoDetailDto.getSortOrder());
 		todoDetailRepository.save(todoDetail);
+	}
+	
+	/**
+	 * delete 1 record table todo_detail
+	 * 
+	 * @param id
+	 * @param todoDetailDto
+	 */
+	@Transactional
+	public TodoDto delete(Long id) {
+		TodoDetail todoDetail = todoDetailRepository.findById(id).get();
+		todoDetail.setDelFlg(true);
+		todoDetailRepository.save(todoDetail);
+		
+		TodoDto todoDto = todoService.getById(todoDetail.getTodo().getId());
+		return todoDto;
 	}
 }

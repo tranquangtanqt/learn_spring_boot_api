@@ -10,4 +10,5 @@ import com.learn.api.entities.TodoDetail;
 @Repository
 public interface ITodoDetailRepository extends JpaRepository<TodoDetail, Long> {
 	List<TodoDetail> findByOrderBySortOrderAsc();
+	List<TodoDetail> findByTodoId(Long id);
 }
