@@ -11,7 +11,6 @@ import com.learn.api.dto.TodoDetailDto;
 import com.learn.api.dto.TodoDto;
 import com.learn.api.entities.TodoDetail;
 import com.learn.api.repositories.ITodoDetailRepository;
-import com.learn.api.repositories.ITodoRepository;
 
 @Service
 public class TodoDetailService {
