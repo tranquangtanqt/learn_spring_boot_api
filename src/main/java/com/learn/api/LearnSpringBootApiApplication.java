@@ -35,9 +35,9 @@ public class LearnSpringBootApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		initTodo();
-		initCustomer();
-		initProduct();
+//		initTodo();
+//		initCustomer();
+//		initProduct();
 	}
 
 	private void initTodo() {

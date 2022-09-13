@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.learn.api.dto.ProductDto;
 import com.learn.api.entities.Product;
@@ -38,5 +39,17 @@ public class ProductService {
 		if(product.getDelFlg() != null && product.getDelFlg().equals(true)) return null;
 		return mapperService.mapProductToDto(product);
 	}
-
+	
+	/**
+	 * Get record product
+	 * @param id
+	 * @return
+	 */
+	@Transactional
+	public ProductDto update(ProductDto productDto) {
+		Product product = productRepository.findById(productDto.getId()).get();
+		product.setName(productDto.getName());
+		productRepository.save(product);
+		return getById(productDto.getId());
+	}
 }
