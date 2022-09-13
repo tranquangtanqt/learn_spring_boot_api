@@ -19,5 +19,5 @@ public class ProductDto extends BaseDto implements Serializable{
 	private int quantityInventory;
 	private int quantitySold;
 	private String unit;
-	private String notes;
+	private String note;
 }
