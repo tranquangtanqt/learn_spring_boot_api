@@ -49,6 +49,10 @@ public class ProductService {
 	public ProductDto update(ProductDto productDto) {
 		Product product = productRepository.findById(productDto.getId()).get();
 		product.setName(productDto.getName());
+		product.setEntryPrice(productDto.getEntryPrice());
+		product.setWholesalePrice(productDto.getWholesalePrice());
+		product.setRetailPrice(productDto.getRetailPrice());
+		product.setNote(productDto.getNote());
 		productRepository.save(product);
 		return getById(productDto.getId());
 	}
